@@ -1,12 +1,15 @@
-import { StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import { useMemo } from "react";
+import { MEALS } from "../data/dummy-data";
+import MealItem from "../components/MealItem";
 
 export default function MealsOverView({ route: { params: categoryId } }) {
     const id  = useMemo(() => categoryId.categoryId ,[categoryId])
-    console.log(id)
+    const meals = useMemo(() => MEALS.filter(({categoryIds}) => categoryIds.indexOf(id) >= 0 ), [categoryId]);
+    const renderMealItem =(meal) => <MealItem meal={meal.item} />
     return (
         <View style={styles.container}>
-            <Text>{categoryId.categoryId}</Text>
+            <FlatList data={meals} renderItem={renderMealItem} keyExtractor={meal => meal.id} />
         </View>
     );
 }
