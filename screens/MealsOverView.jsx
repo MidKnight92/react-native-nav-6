@@ -1,9 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
+import { useMemo } from "react";
 
-export default function MealsOverView(){
+export default function MealsOverView({ route: { params: categoryId } }) {
+    const id  = useMemo(() => categoryId.categoryId ,[categoryId])
+    console.log(id)
     return (
         <View style={styles.container}>
-            <Text>Meal Screen</Text>
+            <Text>{categoryId.categoryId}</Text>
         </View>
     );
 }
