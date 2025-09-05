@@ -1,10 +1,21 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
-import { useMemo } from "react";
+import { useLayoutEffect, useMemo } from "react";
 import { MEALS } from "../data/dummy-data";
 import MealItem from "../components/MealItem";
+import { CATEGORIES } from "../data/dummy-data";
 
-export default function MealsOverView({ route: { params: categoryId } }) {
-    const id = useMemo(() => categoryId.categoryId, [categoryId])
+export default function MealsOverView({ route: { params: { categoryId } }, navigation }) {
+    const id = useMemo(() => categoryId, [categoryId])
+    const categoryTitle = useMemo(
+        () => CATEGORIES.find(({ id }) => id === categoryId).title,
+        [categoryId]
+    );
+     useLayoutEffect(() => {
+        navigation.setOptions({
+        title: categoryTitle
+    })
+     })
+    
     const meals = useMemo(() => MEALS.filter(({ categoryIds }) => categoryIds.indexOf(id) >= 0), [categoryId]);
     const renderMealItem = ({ item: { duration, complexity, affordability, imageUrl, title } }) => (
         <MealItem

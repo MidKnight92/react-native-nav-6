@@ -1,6 +1,5 @@
 import { View, Text, Pressable, StyleSheet, Image, Platform } from "react-native"
 export default function MealItem({ duration, complexity, affordability, imageUrl, title }) {
-    // console.log(meal)
     return (
         <View style={styles.container}>
             <Pressable android_ripple={{color: '#ccc'}} style={({pressed}) => pressed ? styles.buttonPressed : null} >
