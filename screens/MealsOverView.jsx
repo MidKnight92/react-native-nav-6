@@ -10,12 +10,12 @@ export default function MealsOverView({ route: { params: { categoryId } }, navig
         () => CATEGORIES.find(({ id }) => id === categoryId).title,
         [categoryId]
     );
-     useLayoutEffect(() => {
+    useLayoutEffect(() => {
         navigation.setOptions({
-        title: categoryTitle
-    })
-     })
-    
+            title: categoryTitle
+        });
+    }, [categoryTitle, navigation])
+
     const meals = useMemo(() => MEALS.filter(({ categoryIds }) => categoryIds.indexOf(id) >= 0), [categoryId]);
     const renderMealItem = ({ item: { duration, complexity, affordability, imageUrl, title } }) => (
         <MealItem
