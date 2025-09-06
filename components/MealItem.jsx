@@ -1,8 +1,8 @@
 import { View, Text, Pressable, StyleSheet, Image, Platform } from "react-native"
-export default function MealItem({ duration, complexity, affordability, imageUrl, title }) {
+export default function MealItem({ id, duration, complexity, affordability, imageUrl, title, pressHandler }) {
     return (
         <View style={styles.container}>
-            <Pressable android_ripple={{color: '#ccc'}} style={({pressed}) => pressed ? styles.buttonPressed : null} >
+            <Pressable android_ripple={{color: '#ccc'}} style={({pressed}) => pressed ? styles.buttonPressed : null} onPress={() => pressHandler(id)}>
                 <View style={styles.innerContainer}>
                     <View>
                         <Image source={{ uri: imageUrl }} style={styles.image} />
