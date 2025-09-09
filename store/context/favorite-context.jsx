@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback } from "react";
+import { createContext, useContext, useState, useMemo } from "react";
 
 const FavoriteContext = createContext({
     ids: [],
@@ -9,16 +9,16 @@ const FavoriteContext = createContext({
 
 export const FavoriteContextProvider = ({ children }) => {
     const [favs, setFavs] = useState([]);
-    const getFavorites = useCallback(() => [...favs], []);
-    const hasFavorite = useCallback((id) => favs.includes(favId => favId === id), []);
-    const addFavorite = useCallback((id) => {
-        setFavs(prevFavs => [...prevFavs, id]);
-    }, []);
-    const removeFavorite = useCallback((id) => {
+    const hasFavorite = (id) => favs.includes(id);
+    const addFavorite = (id) => {
+        if (!hasFavorite(id)) setFavs(prevFavs => [...prevFavs, id]);
+    };
+    const removeFavorite = (id) => {
         setFavs(prevFavs => prevFavs.filter(favIds => favIds !== id));
-    }, []);
+    };
+    const value = useMemo(() => ({ favs, addFavorite, removeFavorite, hasFavorite }), [favs]);
     return (
-        <FavoriteContext.Provider value={{ getFavorites, addFavorite, removeFavorite, hasFavorite }}>
+        <FavoriteContext.Provider value={value}>
             {children}
         </FavoriteContext.Provider>
     );

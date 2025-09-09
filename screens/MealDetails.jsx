@@ -1,6 +1,6 @@
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { MEALS } from "../data/dummy-data";
-import { useLayoutEffect, useMemo, useCallback } from "react";
+import { useLayoutEffect, useMemo, useCallback, useState } from "react";
 import GeneralMealInfo from "../components/GeneralMealInfo";
 import ListInfo from "../components/ListInfo";
 import Subtitle from "../components/Subtitle";
@@ -10,19 +10,18 @@ import { useFavoriteContext } from "../store/context/favorite-context";
 export default function MealDetails({ route: { params: { mealId } }, navigation }) {
     const { addFavorite, removeFavorite, hasFavorite } = useFavoriteContext();
     const { id, title, affordability, complexity, imageUrl, duration, ingredients, steps, isGlutenFree, isVegan, isVegetarian, isLactoseFree } = useMemo(() => MEALS.find(({ id }) => id === mealId), [mealId]);
-
-    const handleFavoritePress = useCallback((id) => {
-        hasFavorite(id) ? removeFavorite(id) : addFavorite(id);
-    }, [id]);
-
+    const isFavorite = hasFavorite(id);
     useLayoutEffect(() => {
         navigation.setOptions({
             title,
             headerRight: () => (
-                <IconButton handlePress={() => handleFavoritePress(id)} icon={hasFavorite(id) ? "star" : 'star-outline'} color="#928f8fff" />
+                <IconButton handlePress={() => {
+                    isFavorite ? removeFavorite(id) : addFavorite(id);
+                }} icon={isFavorite ? "star" : 'star-outline'} color="#928f8fff" />
             )
         })
-    }, [mealId, navigation])
+    }, [mealId, navigation, isFavorite, addFavorite, removeFavorite]);
+
     return (
         <ScrollView>
             <View>
