@@ -5,19 +5,21 @@ import GeneralMealInfo from "../components/GeneralMealInfo";
 import ListInfo from "../components/ListInfo";
 import Subtitle from "../components/Subtitle";
 import IconButton from "../components/IconButton";
+import { useFavoriteContext } from "../store/context/favorite-context";
 
 export default function MealDetails({ route: { params: { mealId } }, navigation }) {
+    const { addFavorite, removeFavorite, hasFavorite } = useFavoriteContext();
     const { id, title, affordability, complexity, imageUrl, duration, ingredients, steps, isGlutenFree, isVegan, isVegetarian, isLactoseFree } = useMemo(() => MEALS.find(({ id }) => id === mealId), [mealId]);
 
-    const pressHandler = useCallback(() => {
-        console.log('hit');
-    }, []);
+    const handleFavoritePress = useCallback((id) => {
+        hasFavorite(id) ? removeFavorite(id) : addFavorite(id);
+    }, [id]);
 
     useLayoutEffect(() => {
         navigation.setOptions({
             title,
             headerRight: () => (
-                <IconButton handlePress={pressHandler} icon="star" color="#928f8fff" />
+                <IconButton handlePress={() => handleFavoritePress(id)} icon={hasFavorite(id) ? "star" : 'star-outline'} color="#928f8fff" />
             )
         })
     }, [mealId, navigation])
@@ -31,9 +33,9 @@ export default function MealDetails({ route: { params: { mealId } }, navigation 
 
                     <View style={styles.listContainer}>
                         <Subtitle subtitle="Ingredients:" />
-                        <ListInfo list={ingredients} category="ingredients" title={title}/>
+                        <ListInfo list={ingredients} category="ingredients" title={title} />
                         <Subtitle subtitle="Steps:" />
-                        <ListInfo list={steps} category="steps"  title={title} />
+                        <ListInfo list={steps} category="steps" title={title} />
                     </View>
                 </View>
 

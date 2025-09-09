@@ -3,9 +3,9 @@ import { View, Text, StyleSheet } from "react-native"
 export default function ListInfo({ list, category, title }) {
     return (
         <>
-            {list.map((item) => (
-                <View style={styles.list}>
-                    <Text key={`${category}-${title}-${Date.now()}-${Math.random()}`}>{item}</Text> 
+            {list.map((item, index) => (
+                <View style={styles.list} key={`${category}-${title}-${index}`}>
+                    <Text>{item}</Text> 
                     </View>
                 ))
             }
