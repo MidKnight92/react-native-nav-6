@@ -14,9 +14,9 @@ const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
   return (
-    <Drawer.Navigator style={screenOptions} screenOptions={{drawerContentStyle: '#7cc0d5ff', drawerInactiveTintColor: 'gray', drawerActiveTintColor: 'black'}}>
-      <Drawer.Screen name="Categories" component={CategoryScreen} options={{drawerIcon: ({color, size}) => <Ionicons name='list' color={color} size={size}/>}}/>
-      <Drawer.Screen name="FavoriteScreen" component={FavoriteScreen} options={{drawerIcon: ({color, size}) => <Ionicons name='star' color={color} size={size} />}}/>
+    <Drawer.Navigator style={screenOptions} screenOptions={{ drawerContentStyle: '#7cc0d5ff', drawerInactiveTintColor: 'gray', drawerActiveTintColor: 'black' }}>
+      <Drawer.Screen name="Categories" component={CategoryScreen} options={{ drawerIcon: ({ color, size }) => <Ionicons name='list' color={color} size={size} /> }} />
+      <Drawer.Screen name="FavoriteScreen" component={FavoriteScreen} options={{ drawerIcon: ({ color, size }) => <Ionicons name='star' color={color} size={size} /> }} />
     </Drawer.Navigator>
   );
 }
@@ -27,7 +27,7 @@ export default function App() {
       <StatusBar style="dark" />
       <Stack.Navigator
         screenOptions={screenOptions}>
-        <Stack.Screen name="Drawer" component={DrawerNavigator} options={{ title: 'All Categories', headerShown: false}}/>
+        <Stack.Screen name="Drawer" component={DrawerNavigator} options={{ title: 'All Categories', headerShown: false }} />
         <Stack.Screen name="Meal" component={MealsOverView} />
         <Stack.Screen name="MealDetails" component={MealDetails} />
       </Stack.Navigator>
