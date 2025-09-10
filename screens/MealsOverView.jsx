@@ -1,8 +1,7 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
 import { useLayoutEffect, useMemo } from "react";
 import { MEALS } from "../data/dummy-data";
-import MealItem from "../components/MealItem";
 import { CATEGORIES } from "../data/dummy-data";
+import MealList from "../components/MealList";
 
 export default function MealsOverView({ route: { params: { categoryId } }, navigation }) {
     const id = useMemo(() => categoryId, [categoryId])
@@ -20,27 +19,6 @@ export default function MealsOverView({ route: { params: { categoryId } }, navig
     }, [categoryTitle, navigation])
 
     const meals = useMemo(() => MEALS.filter(({ categoryIds }) => categoryIds.indexOf(id) >= 0), [categoryId]);
-    const renderMealItem = ({ item: { id, duration, complexity, affordability, imageUrl, title } }) => (
-        <MealItem
-            id={id}
-            duration={duration}
-            complexity={complexity}
-            affordability={affordability}
-            imageUrl={imageUrl}
-            title={title}
-            pressHandler={handlePress}
-        />
-    );
-    return (
-        <View style={styles.container}>
-            <FlatList data={meals} renderItem={renderMealItem} keyExtractor={meal => meal.id} />
-        </View>
-    );
-}
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 16
-    }
-})
+    return <MealList meals={meals} handlePress={handlePress}/>;
+}
